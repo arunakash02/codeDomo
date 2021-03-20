@@ -1,0 +1,86 @@
+#statement:Predict the percentage of an student based on the no. of studing hours using linear regression
+
+
+#importing the required libraries
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+from scipy import stats
+import numpy as np
+import seaborn as sb 
+
+
+# getting the data from browser 
+
+
+url="http://bit.ly/w-data"
+data=pd.read_csv(url)
+data
+
+#spliting the data from dataframe
+
+x=data['Hours'].values
+y=data['Scores'].values
+
+
+# Formula for linear regression equation is given by:
+
+# y=a+bx
+# a and b are given by the following formulas:
+
+#a (intercept)=∑y∑x2–∑x∑xy(∑x2)–(∑x)2
+ 
+
+# b(slope)=n∑xy−(∑x)(∑y)n∑x2−(∑x)2
+# Where,
+# x and y are two variables on the regression line.
+# b = Slope of the line.
+# a = y-intercept of the line.
+# x = Values of the first data set.
+# y = Values of the second data set.
+
+
+
+# finding the mean values for the given data
+
+mean_x=np.mean(x)
+mean_y=np.mean(y)
+
+
+#to find the no of data present in the  frame
+
+n=len(x)
+
+
+numer=0
+denom=0
+
+# predicting the values by using Least-Squares Regression formula 
+# calculating the values 
+
+for i in range(n):
+       numer+= (x[i] - mean_x)* (y[i] - mean_y )
+       denom+= (x[i] - mean_x)**2 
+
+b1= numer/denom
+b0= mean_y - (b1 * mean_x)
+
+print(b1,b0)
+
+# predicting the percentage the student studied for 9.25 hours
+predict_hours=9.25
+answer= b0 + b1*predict_hours
+print("The study studied for 9.25 hours will score:",answer,"percentage in exam")
+
+
+#plotting the regression line 
+sb.regplot(x = "Hours", 
+            y = "Scores",  
+            ci = None, 
+            data = data) 
+
+
+
+
+
